@@ -1,4 +1,5 @@
-from fastapi import FastAPI, status, HTTPException
+from fastapi import FastAPI, status, HTTPException, Response
+from fastapi.middleware.cors import CORSMiddleware
 from db.models.user import User
 from db.schemas.user import user_schema, users_all_schemas
 from db.client import db_client
@@ -7,12 +8,26 @@ from bson import ObjectId #para importar un objeto con la estructura id del JSon
 
 app = FastAPI()
 
+#Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todas las origenes (cambia esto en producción)
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],  # Permite todos los headers
+)
+
 
 #inicia el server: uvicorn main:app --reload
 #salir del server: Ctrl + C
 
 #url local: http://127.0.0.1:8000
 
+@app.head("/")
+async def root_head():
+    # Personalizar los encabezados
+    headers = {"X-Custom-Header": "Valor personalizado"}
+    return Response(headers=headers)
 
 @app.get("/mongo_clientes", response_model=list[User]) #quiero una lista de todos los usuarios
 async def users():
