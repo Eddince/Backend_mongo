@@ -1,0 +1,8 @@
+fastapi[all]
+python-multipart
+uvicorn
+pydantic
+typing
+passlib
+pymongo
+bson
