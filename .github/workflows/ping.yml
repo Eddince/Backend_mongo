@@ -1,0 +1,11 @@
+name: Ping Backend
+on:
+  schedule:
+    - cron: '*/1 * * * *'  # Cada 5 minutos
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar ping al backend
+        run: |
+          curl -X GET https://backend-imp.onrender.com/ping
