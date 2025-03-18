@@ -33,6 +33,10 @@ async def root_head():
 async def users():
     return users_all_schemas(db_client.users.find())
 
+@app.get("/ping")
+async def ping():
+    return {"message": "pong"}
+
 @app.get("/mongodb/{id}")
 async def user(id: str):
     
