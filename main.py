@@ -119,4 +119,5 @@ def search_user(field: str , key): #buscador generico
         user = user_schema (db_client.users.find_one({field : key})) #buscar el email  
         return User(**user)                                
     except:
-        return {"error":"No se ha encontrado el usuario"}
+        #return {"error":"No se ha encontrado el usuario"} codigo original de Backend
+        raise HTTPException(status_code=404, detail="No se ha encontrado el usuario")
