@@ -4,7 +4,7 @@ from db.models.user import User
 from db.schemas.user import user_schema, users_all_schemas
 from db.client import db_client
 from bson import ObjectId #para importar un objeto con la estructura id del JSon
-
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -120,4 +120,5 @@ def search_user(field: str , key): #buscador generico
         return User(**user)                                
     except:
         #return {"error":"No se ha encontrado el usuario"} codigo original de Backend
-        raise HTTPException(status_code=404, detail="No se ha encontrado el usuario")
+        #raise HTTPException(status_code=404, detail="No se ha encontrado el usuario")
+        return JSONResponse(status_code=404, content={"message": "El codigo no existe"})
